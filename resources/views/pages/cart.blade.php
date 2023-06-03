@@ -119,20 +119,18 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label for="provinces_id">Provinsi</label>
-                  <select name="provinces_id" id="provinces_id" class="form-control" v-model="provinces_id" v-if="provinces">
-                    <option v-for="province in provinces" :value="province.id">@{{ province.name }}</option>
-                  </select>
-                  <select v-else class="form-control"></select>
+                  <label class="mb-2">PROVINSI</label>
+                    <select class="w-full border bg-white rounded px-3 py-2 outline-none" @change="getCitiesDestination" v-model="state.province_destination">
+                      <option class="py-1" v-for="province in provinces" :key="province.id" :value="province.id">@{{ province.name }}</option>
+                    </select>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label for="regencies_id">Kota</label>
-                  <select name="regencies_id" id="regencies_id" class="form-control" v-model="regencies_id" v-if="regencies">
-                    <option v-for="regency in regencies" :value="regency.id">@{{regency.name }}</option>
-                  </select>
-                  <select v-else class="form-control"></select>
+                  <label class="mb-2">KABUPATEN</label>
+                  <select class="w-full border bg-white rounded px-3 py-2 outline-none" v-model="state.city_destination">
+                   <option class="py-1" v-for="city in cities_destination" :key="city.id" :value="city.city_id">@{{ city.city_name }}</option>
+                 </select>
                 </div>
               </div>
               <div class="col-md-4">
@@ -162,13 +160,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="country">Berat</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="country"
-                    name="country"
-                    value="Indonesia"
-                  />
+                  <input type="text"  class="form-control" v-model="state.weight" placeholder="Masukkan Berat (Gram)">
                 </div>
               </div>
               <div class="col-md-6">
@@ -193,9 +185,19 @@
                       value="40512"
                     />
                   </div> --}}
-                <div class="col-mt-4">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label for="kurir_id">Kurir</label>
+                    <label class="mb-2">KURIR</label>
+                      <select class="w-full border bg-white rounded px-3 py-2 outline-none" v-model="state.courier">
+                        <option class="py-1" value="jne">JNE</option>
+                        <option class="py-1" value="tiki">TIKI</option>
+                        <option class="py-1" value="pos">POS</option>
+                      </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="kurir_id">layanan</label>
                     <select name="regencies_id" id="regencies_id" class="form-control" v-model="regencies_id" v-if="regencies">
                       <option v-for="regency in regencies" :value="regency.id">@{{regency.name }}</option>
                     </select>
@@ -212,7 +214,7 @@
                 <h2 class="mb-1">Payment Informations</h2>
               </div>
             </div>
-            <div class="row" data-aos="fade-up" data-aos-delay="200" id="paymentInfo">
+            {{-- <div class="row" data-aos="fade-up" data-aos-delay="200" id="paymentInfo"> --}}
               {{-- <div class="col-4 col-md-2">
                 <div class="product-title">Rp0</div>
                 <div class="product-subtitle">Country Tax</div>
@@ -221,7 +223,7 @@
                 <div class="product-title">Rp0</div>
                 <div class="product-subtitle">Product Insurance</div>
               </div> --}}
-              <div class="col-4 col-md-2">
+              {{-- <div class="col-4 col-md-2">
                 <div class="product-title">
                   <ul>
                     <li v-for="result in payments" :key="result.code">
@@ -234,7 +236,9 @@
                     </li>
                   </ul>
                 </div>
-                <div class="product-subtitle">Ship to Sidoarjo</div>
+                <div class="product-subtitle">
+                  >Ship to Sidoarjo
+                </div>
               </div>
               <div class="col-4 col-md-2">
                 <div class="product-title text-success">Rp{{ number_format($totalPrice ?? 0) }}</div>
@@ -248,6 +252,16 @@
                   Checkout Now
                 </button>
               </div>
+            </div> --}}
+            <div class="grid sm:grid-cols-1 md:grid-cols-1 gap-4 p-4" v-if="resultCost">
+              <div class="bg-white p-3 shadow-sm rounded">
+                <h4 class="text-xl pb-1">HASIL ONGKOS KIRIM</h4>
+                <hr class="border-2">
+                <div class="mt-4" v-for="(value, index) in resultCost" :key="index">
+                    @{{ value.service }} - @{{ value.cost[0].value }} - @{{ value.cost[0].etd }} Hari
+                    <hr>
+                </div>
+              </div>
             </div>
           </form>
         </div>
@@ -257,9 +271,9 @@
 
 @push('addon-script')
     <script src="/vendor/vue/vue.js"></script>
-    <script src="https://unpkg.com/vue-toasted"></script>
+    <script  src="https://unpkg.com/vue-toasted"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
+    {{-- <script>
       var locations = new Vue({
         el: "#locations",
         mounted() {
@@ -331,5 +345,118 @@
           },
         }
       });
-    </script>
+    </script> --}}
+    <script type="module">
+
+      // import { onMounted, reactive, ref } from 'vue'
+      // import axios from 'axios'
+      const { onMounted, reactive, ref } = Vue;
+        export default {
+      
+          setup() {
+      
+            /**
+             * state province
+             */
+            const provinces = ref({})
+      
+            /**
+             * state ID for province and city
+             */
+            const state = reactive({
+              
+              province_origin: "",
+              city_origin: "",
+      
+              province_destination: "",
+              city_destination: "",
+      
+              weight: "",
+              courier: ""
+            })
+      
+            /**
+             * state cities origin
+             */
+            const cities_origin    = ref({}) 
+      
+            /**
+             * state cities destination
+             */
+            const cities_destination    = ref({}) 
+      
+            /**
+             * resulCost
+             */
+            const resultCost = ref(null)
+      
+            onMounted(() => {
+      
+              axios.get('http://localhost:8000/api/provinces').then(response => {
+                provinces.value = response.data.data
+              })
+              .catch(error => {
+                console.log(error.response.data)
+              })
+      
+            })
+            
+            /**
+             * function getCitiesOrigin
+             */
+            function getCitiesOrigin() {
+              
+              axios.get(`http://localhost:8000/api/cities/${state.province_origin}`).then(response => {
+                cities_origin.value = response.data.data
+              })
+              .catch(error => {
+                console.log(error.response.data)
+              })
+      
+            }
+      
+            /**
+             * function getCitiesDestination
+             */
+            function getCitiesDestination() {
+      
+              axios.get(`http://localhost:8000/api/cities/${state.province_destination}`).then(response => {
+                cities_destination.value = response.data.data
+              })
+              .catch(error => {
+                console.log(error.response.data)
+              })
+      
+            }
+      
+            /**
+             * function getCostOngkir
+             */
+            function getCostOngkir() {
+      
+              axios.post('http://localhost:8000/api/checkOngkir/', {
+      
+                //send data ke server laravel
+                origin: state.city_origin,
+                destination: state.city_destination,
+                weight: state.weight,
+                courier: state.courier
+      
+              }).then(response => {
+                resultCost.value = response.data.data[0].costs
+              })
+              .catch(error => {
+                console.log(error.response.data)
+              })
+      
+            }
+      
+            return {
+              provinces, state, cities_origin, cities_destination, getCitiesOrigin, getCitiesDestination, getCostOngkir, resultCost
+            }
+      
+          }
+      
+        }
+      </script>
 @endpush
