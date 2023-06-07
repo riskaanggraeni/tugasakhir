@@ -40,7 +40,9 @@ class AuthenticatedSessionController extends Controller
             }else if(Auth::guard('web')->user()->roles == 'PENJUAL'){
                 return redirect()->route('dashboard');
             }else {
+                // dd('masuk jadi pembeli');
                 return redirect()->intended(RouteServiceProvider::HOME);
+                // return redirect('/');
             }
            
         }else{
@@ -54,12 +56,17 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         if (Auth::guard('web')->check()) {
+            if(Auth::guard('web')->user()->roles == 'PENJUAL'){
+                Auth::guard('web')->logout();
+                return redirect('/login');
+            }
             Auth::guard('web')->logout();
+
         } elseif (Auth::guard('penjual')->check()) {
             Auth::guard('penjual')->logout();
         } elseif (Auth::guard('pembeli')->check()) {
             Auth::guard('pembeli')->logout();
-        }
+        } 
 
         $request->session()->invalidate();
 

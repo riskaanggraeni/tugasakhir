@@ -19,6 +19,9 @@ class CategoryController extends Controller
         $categories = Category::all();
         $products = Product::with(['galleries'])->paginate(16);
 
-        return view('pages.category');
+        return view('pages.pembeli.category', [
+            'categories' => $categories,
+            'products' => $products,
+        ]);
     }
 }

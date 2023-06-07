@@ -20,7 +20,9 @@ class CartController extends Controller
     {
         $carts = Cart::with(['product.galleries', 'user'])->where('users_id', Auth::user()->id)->get();
 
-        return view('pages.cart', [
+        // dd($carts);
+
+        return view('pages.pembeli.cart', [
             'carts' => $carts
         ]);
     }

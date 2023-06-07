@@ -34,6 +34,7 @@
                                         <th>Pemilik</th>
                                         <th>Kategori</th>
                                         <th>Harga</th>
+                                        <th>Foto</th>
                                         <th>Aksi</th>
                                     </tr>
                                     </thead>
@@ -73,6 +74,7 @@
                     searchable: false,
                     width: '15%'
                 },
+                { data: 'image', name: 'image' },
             ]
         });
     </script>

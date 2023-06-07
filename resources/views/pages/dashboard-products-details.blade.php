@@ -11,7 +11,7 @@ data-aos="fade-up"
 >
 <div class="container-fluid">
   <div class="dashboard-heading">
-    <h2 class="dashboard-title">Shirup Marzan</h2>
+    {{-- <h2 class="dashboard-title">{{ $products->name }}</h2> --}}
     <p class="dashboard-subtitle">
       Product Details
     </p>
@@ -32,7 +32,7 @@ data-aos="fade-up"
                       id="name"
                       aria-describedby="name"
                       name="storeName"
-                      value="Papel La Casa"
+                      value="{{ $products->name }}"
                     />
                   </div>
                 </div>
@@ -45,7 +45,7 @@ data-aos="fade-up"
                       id="price"
                       aria-describedby="price"
                       name="price"
-                      value="200"
+                      value="{{ $products->price}}"
                     />
                   </div>
                 </div>
@@ -58,8 +58,7 @@ data-aos="fade-up"
                       cols="30"
                       rows="4"
                       class="form-control"
-                    >
-The Nike Air Max 720 SE goes bigger than ever before with Nike's tallest Air unit yet for unimaginable, all-day comfort. There's super breathable fabrics on the upper, while colours add a modern edge. Bring the past into the future with the Nike Air Max 2090, a bold look inspired by the DNA of the iconic Air Max 90. Brand-new Nike Air cushioning
+                    >{{ $products->description}}
                     </textarea>
                   </div>
                 </div>

@@ -84,10 +84,18 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        // dd($request->all());
         $data = $request->all();
 
-        $data['slug'] = Str::slug($request->name);
+        // $path = $request->file('image')->store('images', 'public');
+        // $image = $request->file('image');
+        // $filename = 'images'. $image->getClientOriginalName();
+        // $image->move(public_path('images'), $filename);
 
+        $data['slug'] = Str::slug($request->name);
+        // $data['image'] = $filename;
+
+        // dd($data);
         Product::create($data);
 
         return redirect()->route('product.index');

@@ -57,7 +57,7 @@
                 Hi, {{ Auth::user()->name }}
               </a>
               <div class="dropdown-menu">
-                <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
+                <a href="{{ Auth::guard('web')->user()->roles == 'PENJUAL' ? route('dashboard') : url('/pembeli/dashboard') }}" class="dropdown-item">My Transaction</a>
                         <a href="{{ route('dashboard-settings-account') }}" class="dropdown-item">
                             Settings
                         </a>
@@ -71,6 +71,7 @@
                         </form>
                     </div>
             </li>
+            @if(Auth::guard('web')->user()->roles == 'PEMBELI')
             <li class="nav-item">
               <a href="{{ route('cart')}}" class="nav-link d-inline-block mt-2">
                 @php
@@ -83,6 +84,7 @@
                 <img src="/images/shopping-cart.png" alt="" />
               </a>
             </li>
+            @endif
           </ul>
         @endauth
         </div>

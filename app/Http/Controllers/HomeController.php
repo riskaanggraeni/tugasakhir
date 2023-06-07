@@ -29,9 +29,11 @@ class HomeController extends Controller
         $categories = Category::take(6)->get();
         $products = Product::with(['galleries'])->take(8)->get();
         
+
+
         return view('pages.pembeli.home', [
             'categories' => $categories,
-            'products' =>$products
+            'products' => $products,
         ]);
     }
 }

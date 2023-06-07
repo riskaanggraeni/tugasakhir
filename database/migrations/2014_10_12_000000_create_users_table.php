@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('store_name');
             $table->integer('categories_id');
             $table->integer('store_status');
+            $table->string('roles');
 
             $table->softDeletes();
             $table->rememberToken();

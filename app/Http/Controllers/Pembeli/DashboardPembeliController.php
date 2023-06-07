@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Penjual;
+namespace App\Http\Controllers\Pembeli;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
-class DashboardProductController extends Controller
+use App\Models\Product;
+use App\Models\Cart;
+
+class DashboardPembeliController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,13 +18,21 @@ class DashboardProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('galleries', 'category')
-         -> where('users_id', Auth::user()->id)
-         -> get();
-         
-        return view('pages.dashboard-products',[
-            'products' =>$products
+        return view('pages.pembeli.dashboard-transactions-pembeli', [
+            'title' => 'pembeli',
         ]);
+    }
+
+    public function add(Request $request, $id)
+    {
+        $data = [
+            'products_id' => $id,
+            'users_id' => Auth::user()->id
+        ];
+
+        Cart::create($data);
+
+        return redirect()->route('cart');
     }
 
     /**

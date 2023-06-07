@@ -2,37 +2,38 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-use Illuminate\Database\Eloquent\softDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use softDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
-        'name', 'users_id', 'categories_id', 'price', 'description', 'slug'
+        'name',
+        'user_id',
+        'category_id',
+        'price',
+        'description',
+        'slug',
+        'created_by',
+        'image',
     ];
 
-    protected $hidden = [
+    protected $dates = ['deleted_at'];
 
-    ];
-
-    public function galleries() 
+    public function user()
     {
-        return $this->hasMany(ProductGallery::class, 'products_id', 'id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function user() 
+    public function category()
     {
-        return $this->hasOne(User::class, 'id', 'users_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function category() 
+    public function createdBy()
     {
-        return $this->belongsTo(Category::class, 'categories_id', 'id');
+        return $this->belongsTo(User::class, 'created_by');
     }
-
-    
 }
