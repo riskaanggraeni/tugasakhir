@@ -26,32 +26,27 @@
             {{-- <img src="images/logo.svg" alt="" class="my-4" /> --}}
           </div>
           <div class="list-group list-group-flush">
-            <a href="{{ Auth::guard('web')->user()->roles == 'PENJUAL' ? route('dashboard') : url('/pembeli/dashboard') }}"
-            class="list-group-item list-group-item-action {{ (request()->is('dashboard') || request()->is('/pembeli/dashboard'))  ? 'active' : '' }} "
+            <a
+            href="{{ url('/pembeli/dashboard') }}"
+            class="list-group-item list-group-item-action {{ (request()->is('dashboard')) ? 'active' : '' }} "
               >Dashboard</a>
             {{-- <a --}}
-            @if(Auth::guard('web')->user()->roles == 'PENJUAL')
-            <a href="{{ route('dashboard-product') }}" 
+            {{-- <a href="{{ route('dashboard-product') }}" 
             class="list-group-item list-group-item-action {{ (request()->is('dashboard/products*')) ? 'active' : '' }} "
-            >My Product</a>
-            @endif    
-            
+            >My Product</a>     --}}
             <a
             href="{{ route('dashboard-transaction') }}"
-            class="list-group-item list-group-item-action {{ (request()->is('dashboard/transactions*')) ? 'active' : '' }} "
+            class="list-group-item list-group-item-action {{ (request()->is('dashboard/transactions*') || $title == 'pembeli') ? 'active' : '' }} "
               >Transactions</a
             >
-
-            @if(Auth::guard('web')->user()->roles == 'PENJUAL')
-            <a
+            {{-- <a
             href="{{ route('dashboard-settings-store') }}"
             class="list-group-item list-group-item-action {{ (request()->is('dashboard/settings*')) ? 'active' : '' }} "
-              >Store Settings</a>
-              <a
+              >Store Settings</a> --}}
+              {{-- <a
               href="dashboard-settings.html"
               class="list-group-item list-group-item-action"
-              ></a>
-            @endif
+              ></a> --}}
             {{-- <a
               href="dashboard-account.html"
               class="list-group-item list-group-item-action"
@@ -106,9 +101,9 @@
                     Hi, {{ Auth::guard('web')->user()->name }}
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    {{-- <a class="dropdown-item" href="index.html"
-                      >Back to Store</a
-                    > --}}
+                    <a class="dropdown-item" href="{{ url('/') }}"
+                      >Back to Home</a
+                    >
                     {{-- <a class="dropdown-item" href="dashboard-account.html"
                       >Settings</a
                     > --}}
@@ -116,26 +111,30 @@
                     <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                            Logout
-                        </a>
+                    </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                   </div>
                 </li>
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                   <a class="nav-link d-inline-block mt-2" href="#">
                     <img src="images/icon-cart-empty.svg" alt="" />
                   </a>
-                </li> --}}
+                </li>
               </ul>
               <!-- Mobile Menu -->
               <ul class="navbar-nav d-block d-lg-none mt-3">
                 <li class="nav-item">
                   <a class="nav-link" href="#">
-                    Hi, {{ Auth::guard('web')->user()->name }}
+                    Hi, Angga
                   </a>
                 </li>
-                
+                <li class="nav-item">
+                  <a class="nav-link d-inline-block" href="#">
+                    Cart
+                  </a>
+                </li>
               </ul>
             </div>
           </nav>

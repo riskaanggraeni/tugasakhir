@@ -4,8 +4,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\Admin\CategoryController;
-
+use App\Http\Controllers\Pembeli\DashboardPembeliController;
+use App\Http\Controllers\Admin\CategoryController;
 
 
 /*
@@ -48,10 +48,15 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/details/{id}', [App\Http\Controllers\Pembeli\DetailController::class, 'index']->name('detail'));
 
+// home pembeli
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/categories', [App\Http\Controllers\CategoryController::class, 'index'])->name('categories');
-Route::get('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'detail'])->name('categories-detail');
+
+// route pembeli
+Route::resource('/pembeli/dashboard', DashboardPembeliController::class);
+
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+Route::get('/categories/{id}', [CategoryController::class, 'detail'])->name('categories-detail');
 
 Route::get('/details/{id}', [App\Http\Controllers\Pembeli\DetailController::class, 'index'])->name('detail');
 Route::post('/details/{id}', [App\Http\Controllers\Pembeli\DetailController::class, 'add'])->name('detail-add');
@@ -59,16 +64,20 @@ Route::post('/details/{id}', [App\Http\Controllers\Pembeli\DetailController::cla
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart')->middleware(['cors']);
 Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'delete'])->name('cart-delete');
 
-Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout');
+Route::post('/checkout', [App\Http\Controllers\CheckoutController::class, 'process'])->name('checkout');
+Route::post('/checkout/callback', [App\Http\Controllers\CheckoutController::class, 'callback'])->name('midtrans-callback');
     
 Route::get('/success', [App\Http\Controllers\CartController::class, 'success'])->name('success');
 
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/dashboard/products', [App\Http\Controllers\Penjual\DashboardProductController::class, 'index'])->name('dashboard-product');
+Route::get('/dashboard/products', [App\Http\Controllers\DashboardProductController::class, 'index'])->name('dashboard-product');
 
 Route::get('/dashboard/products/{id}', [App\Http\Controllers\DashboardProductController::class, 'details'])->name('dashboard-product-details');
 Route::get('/dashboard/products/add', [App\Http\Controllers\DashboardProductController::class, 'create'])->name('dashboard-product-create');
+
+// Route::get('/dashboard/products/create', [App\Http\Controllers\DashboardProductController::class, 'create'])->name('dashboard-product-create');
+Route::post('/dashboard/products', [App\Http\Controllers\DashboardProductController::class, 'store'])->name('dashboard-product-store');
 
 Route::get('/dashboard/transactions', [App\Http\Controllers\DashboardTransactionController::class, 'index'])->name('dashboard-transaction');
 Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'details'])->name('dashboard-transaction-details');
@@ -83,6 +92,7 @@ Route::get('/register/success', [App\Http\Controller\Auth\RegisterController::cl
 // ->middleware(['auth', 'admin']);
 Route::prefix('admin')
     // ->namespace('Admin')
+    
     ->namespace('App\Http\Controllers\Admin')
     // namespace aku ganti yang kedua, yang awal yang namespace baris pertama yg tak komen 
     ->group(function() {
@@ -94,20 +104,11 @@ Route::prefix('admin')
         Route::resource('product-gallery', ProductGalleryController::class);
     });
 
-// Route::prefix('pembeli')
-//     // ->namespace('Admin')
-//     ->namespace('App\Http\Controllers\Pembeli')
-//     // namespace aku ganti yang kedua, yang awal yang namespace baris pertama yg tak komen 
-//     ->group(function() {
-//         // Route::get('/', [App\Http\Controllers\Pembeli\HomeAdminController::class, 'index'])->name('admin-home');
-//         Route::resource('detail', DetailController::class);
-//         // Route::resource('toko', TokoController::class);
-//         // Route::resource('user', UserController::class);
-//         // Route::resource('product', ProductController::class);
-//         // Route::resource('product-gallery', ProductGalleryController::class);
+
 //     });
 Route::get('/register', [App\Http\Controller\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
 
 Auth::routes();
 // app\Http\Controllers\Auth\AuthenticatedSessionController.php
 Route::post('/login/auth', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])->name('login.post');
+Route::post('/logout', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');

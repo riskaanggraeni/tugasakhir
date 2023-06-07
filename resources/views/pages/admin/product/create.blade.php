@@ -68,8 +68,14 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
+                                        <label>Foto</label>
+                                        <input type="file" class="form-control" name="image" required  />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
                                         <label>Deskripsi</label>
-                                        <textarea name="description" id="editor"></textarea>
+                                        <input type="text" class="form-control" name="description" required />
                                     </div>
                                 </div>
                             </div>

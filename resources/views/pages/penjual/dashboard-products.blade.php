@@ -13,14 +13,14 @@
               <div class="dashboard-heading">
                 <h2 class="dashboard-title">My Products</h2>
                 <p class="dashboard-subtitle">
-                  Kelola produk mu
+                  Manage it well and get money
                 </p>
               </div>
               <div class="dashboard-content">
                 <div class="row">
                   <div class="col-12">
                     <a
-                      href="dashboard-products-create.html"
+                      href="{{ route('dashboard-product-create')}}"
                       class="btn btn-primary"
                       >Add New Product</a
                     >

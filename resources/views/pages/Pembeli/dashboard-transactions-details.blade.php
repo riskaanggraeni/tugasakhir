@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.pembeli.dashboard')
 
 @section('title')
     Store Dashboard Transactions

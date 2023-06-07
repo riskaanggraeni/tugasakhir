@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Store Dashboard
+  Account Settings
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
 >
   <div class="container-fluid">
     <div class="dashboard-heading">
-      {{-- <h2 class="dashboard-title">My Account</h2> --}}
+      <h2 class="dashboard-title">My Account</h2>
       <p class="dashboard-subtitle">
         Update your current profile
       </p>
@@ -132,7 +132,7 @@
                   <div class="col text-right">
                     <button
                       type="submit"
-                      class="btn btn-primary px-5"
+                      class="btn btn-success px-5"
                     >
                       Save Now
                     </button>
@@ -145,8 +145,9 @@
       </div>
     </div>
   </div>
-</div>    
+</div>
 @endsection
+
 
 @push('addon-script')
     <script src="/vendor/vue/vue.js"></script>
@@ -189,4 +190,3 @@
       });
     </script>
 @endpush
-

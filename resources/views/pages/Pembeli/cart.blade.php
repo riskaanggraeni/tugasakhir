@@ -47,6 +47,8 @@
                                             @if ($cart->product->galleries)
                                                 <img src="{{ Storage::url($cart->product->galleries->first()->photos) }}"
                                                     alt="" class="cart-image" />
+                                            @elseif ($cart->product->galleries == null)
+                                            <h1>null</h1>
                                             @endif
                                         </td>
                                         <td style="width: 35%;">
