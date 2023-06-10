@@ -19,7 +19,7 @@ class DashboardProductController extends Controller
         // $products = Product::with('galleries', 'category')
         //  -> where('users_id', Auth::user()->id)
         //  -> get();
-         
+
         // return view('pages.dashboard-products',[
         //     'products' =>$products
         // ]);
