@@ -16,13 +16,13 @@ class DashboardProductController extends Controller
      */
     public function index()
     {
-        // $products = Product::with('galleries', 'category')
-        //  -> where('users_id', Auth::user()->id)
-        //  -> get();
-         
-        // return view('pages.dashboard-products',[
-        //     'products' =>$products
-        // ]);
+        $products = Product::with('galleries', 'category')
+            ->where('users_id', Auth::user()->id)
+            ->get();
+
+        return view('pages.dashboard-products', [
+            'products' => $products
+        ]);
     }
 
     /**
@@ -32,7 +32,14 @@ class DashboardProductController extends Controller
      */
     public function create()
     {
-        //
+
+
+        // $categories = Category::all();
+        // return view('pages.dashboard-products-create', [
+        //     'categories' => $categories
+        // ]);
+        dd("masuk");
+        return view('pages.dashboard-products-create');
     }
 
     /**

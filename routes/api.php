@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('register/check', 'Auth\RegisterController@check')->name('api-register-check');
+// Route::get('register/check', 'Auth\RegisterController@check')->name('api-register-check');
 Route::get('provinces', [App\Http\Controllers\API\LocationController::class, 'provinces'])->name('api-provinces');
 Route::get('regencies/{provincies_id}', [App\Http\Controllers\API\LocationController::class, 'regencies'])->name('api-regencies');
 // Route::get('register/check', '[App\Http\Controllers\Auth\RegisterControlle::class,'check)->name('api-register-check');

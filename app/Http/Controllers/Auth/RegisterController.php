@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Category;
-use Illuminate\Foundation\Auth\RegistersUsers;
+// use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -24,7 +24,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    // use RegistersUsers;
 
     /**
      * Where to redirect users after registration.
@@ -83,13 +83,13 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function success ()
+    public function success()
     {
         return view('auth.success');
     }
 
     public function check(Request $request)
     {
-        return User::where('email', $request->email)->count() > 0 ? 'Unavailable' :"Available" ;
+        return User::where('email', $request->email)->count() > 0 ? 'Unavailable' : "Available";
     }
 }

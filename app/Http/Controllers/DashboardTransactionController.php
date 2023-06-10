@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Province;
+use App\Models\Regency;
 use App\Models\TransactionDetail;
 
 use Illuminate\Http\Request;
@@ -12,25 +14,27 @@ class DashboardTransactionController extends Controller
 {
     public function index()
     {
-        $sellTransactions = TransactionDetail::with(['transaction.user','product.galleries'])
-                            ->whereHas('product', function($product){
-                                $product->where('users_id', Auth::user()->id);
-                            })->get();
-        $buyTransactions = TransactionDetail::with(['transaction.user','product.galleries'])
-                            ->whereHas('transaction', function($transaction){
-                                $transaction->where('users_id', Auth::user()->id);
-                            })->get();
-        
-        return view('pages.dashboard-transactions',[
+        $sellTransactions = TransactionDetail::with(['transaction.user', 'product.galleries'])
+            ->whereHas('product', function ($product) {
+                $product->where('users_id', Auth::user()->id);
+            })->get();
+        $buyTransactions = TransactionDetail::with(['transaction.user', 'product.galleries'])
+            ->whereHas('transaction', function ($transaction) {
+                $transaction->where('users_id', Auth::user()->id);
+            })->get();
+
+        return view('pages.dashboard-transactions', [
             'sellTransactions' => $sellTransactions,
             'buyTransactions' => $buyTransactions
         ]);
     }
     public function details(Request $request, $id)
     {
-        $transaction = TransactionDetail::with(['transaction.user','product.galleries'])
-        ->findOrFail($id);
-            return view('pages.dashboard-transaction-details-penjual',[
+        $transaction = TransactionDetail::with(['transaction.user', 'product.galleries'])
+            ->findOrFail($id);
+        // dd($transaction->transaction->user->provinces_id);
+        // dd($transaction->transaction->user->regencies_id, Regency::find($transaction->transaction->user->regencies_id));
+        return view('pages.dashboard-transaction-details-penjual', [
             'transaction' => $transaction
         ]);
     }

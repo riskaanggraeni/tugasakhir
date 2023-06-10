@@ -48,7 +48,7 @@
                                                 <img src="{{ Storage::url($cart->product->galleries->first()->photos) }}"
                                                     alt="" class="cart-image" />
                                             @elseif ($cart->product->galleries == null)
-                                            <h1>null</h1>
+                                                <h1>null</h1>
                                             @endif
                                         </td>
                                         <td style="width: 35%;">
@@ -139,13 +139,13 @@
                                     value="Indonesia" />
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <div class="form-group">
                                 <label for="country">Berat</label>
                                 <input type="text" class="form-control" id="country" name="country"
                                     v-model="weight" />
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="phone_number">Mobile</label>
@@ -224,7 +224,7 @@
 
 @push('addon-script')
     <script src="/vendor/vue/vue.js"></script>
-    <script  src="https://unpkg.com/vue-toasted"></script>
+    <script src="https://unpkg.com/vue-toasted"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         var vueContent = new Vue({
@@ -285,7 +285,7 @@
                     axios.post('{{ route('kurir.cost') }}', {
                             origin: '444',
                             destination: self.regencies_id,
-                            weight: self.weight,
+                            weight: 1000,
                             courier: self.selectedCourier
                         })
                         .then(function(response) {
