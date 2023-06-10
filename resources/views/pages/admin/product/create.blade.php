@@ -66,12 +66,12 @@
                                         <input type="number" class="form-control" name="price" required  />
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Foto</label>
                                         <input type="file" class="form-control" name="image" required  />
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Deskripsi</label>

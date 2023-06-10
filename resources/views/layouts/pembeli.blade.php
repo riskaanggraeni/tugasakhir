@@ -28,7 +28,7 @@
           <div class="list-group list-group-flush">
             <a
             href="{{ url('/pembeli/dashboard') }}"
-            class="list-group-item list-group-item-action {{ (request()->is('dashboard')) ? 'active' : '' }} "
+            class="Pc {{ (request()->is('dashboard')) ? 'active' : '' }} "
               >Dashboard</a>
             {{-- <a --}}
             {{-- <a href="{{ route('dashboard-product') }}" 

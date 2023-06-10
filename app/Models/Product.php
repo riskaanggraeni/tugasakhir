@@ -10,30 +10,22 @@ class Product extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name',
-        'user_id',
-        'category_id',
-        'price',
-        'description',
-        'slug',
-        'created_by',
-        'image',
+        'name', 'users_id', 'categories_id', 'price', 'description', 'slug'
     ];
 
-    protected $dates = ['deleted_at'];
+    protected $hidden = [
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
+    ];
+
+    public function galleries(){
+        return $this->hasMany( ProductGallery::class, 'products_id', 'id' );
     }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class, 'category_id');
+    public function user(){
+        return $this->hasOne( User::class, 'id', 'users_id');
     }
 
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'created_by');
+    public function category(){
+        return $this->belongsTo( Category::class, 'categories_id', 'id');
     }
 }
