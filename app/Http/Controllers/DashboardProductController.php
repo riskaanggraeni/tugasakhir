@@ -17,17 +17,18 @@ class DashboardProductController extends Controller
     public function index()
     {
         $products = Product::where('users_id', Auth()->user()->id)
-        ->get();
+            ->get();
         // dd($products);
-        return view('pages.dashboard-products',[
+        return view('pages.dashboard-products', [
             'products' => $products
         ]);
     }
 
     public function details(Request $request, $id)
     {
-        $product = Product::with(['galleries','user','category'])->findOrFail($id);
+        $product = Product::with(['galleries', 'user', 'category'])->findOrFail($id);
         $categories = Category::all();
+        // dd($product);
         // $products = Product::where('categories_id', Auth()->user()->id)
         // ->get();
 
@@ -47,7 +48,7 @@ class DashboardProductController extends Controller
         $data['photos'] = $request->file('photos')->store('assets/product', 'public');
 
         ProductGallery::create($data);
-        
+
         return redirect()->route('dashboard-product-details', $request->products_id);
     }
 
@@ -58,14 +59,15 @@ class DashboardProductController extends Controller
 
         return redirect()->route('dashboard-product-details', $request->products_id);
     }
-    
+
 
     public function create()
     {
+        // dd("masuk");
         // $users = User::all();
         $categories = Category::all();
 
-        return view('pages.dashboard-products-create',[
+        return view('pages.dashboard-products-create', [
             // 'users' => $users,
             'categories' => $categories
         ]);
@@ -74,12 +76,12 @@ class DashboardProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->all();
-
+        // dd($data);
         $data['slug'] = Str::slug($request->name);
         $Product = Product::create($data);
 
         $gallery = [
-            'products_id' => $product->id,
+            'products_id' => $Product->id,
             'photos' => $request->file('photo')->store('assets/product', 'public')
         ];
 
@@ -100,5 +102,4 @@ class DashboardProductController extends Controller
 
         return redirect()->route('dashboard-product');
     }
-
 }
