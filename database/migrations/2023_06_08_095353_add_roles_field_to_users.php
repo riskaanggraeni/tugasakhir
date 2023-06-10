@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('transactions', function (Blueprint $table) {
-            $table->dropColumn('resi');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('roles')->default('PEMBELI'); 
+                // USER (Buyer dan Seller), ADMIN (All Access) 
         });
     }
 
@@ -25,8 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('transactions', function (Blueprint $table) {
-            $table->string('resi');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('roles');
         });
     }
 };

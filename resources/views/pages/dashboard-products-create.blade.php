@@ -1,55 +1,100 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Store Dashboard Product
+    Store Dashboard Product Detail
 @endsection
 
 @section('content')
-    <!-- Section Content -->
-          <div
-            class="section-content section-dashboard-home"
-            data-aos="fade-up"
-          >
-            <div class="container-fluid">
-              <div class="dashboard-heading">
-                <h2 class="dashboard-title">My Products</h2>
-                <p class="dashboard-subtitle">
-                  Manage it well and get money
-                </p>
-              </div>
-              <div class="dashboard-content">
+<!-- Section Content -->
+<div
+  class="section-content section-dashboard-home"
+  data-aos="fade-up"
+>
+  <div class="container-fluid">
+    <div class="dashboard-heading">
+      <h2 class="dashboard-title">Create Product</h2>
+      <p class="dashboard-subtitle">
+        Create your own product
+      </p>
+    </div>
+    <div class="dashboard-content">
+      <div class="row">
+        <div class="col-12">
+          @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($error->all() as $error)
+                            <li>{{ $error}}</li>
+                        @endforeach
+                    </ul>
+                </div> 
+                @endif
+          <form action="{{ route('dashboard-product-store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="users_id" value="{{ Auth::user()->id }}">
+            <div class="card">
+              <div class="card-body">
                 <div class="row">
-                  <div class="col-12">
-                    <a
-                      href="{{ route('dashboard-product-create') }}"
-                      class="btn btn-success"
-                      >Add New Product</a
-                    >
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Product Name</label>
+                      <input type="text" class="form-control" name="name"/>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Price</label>
+                      <input type="number" class="form-control" name="price"/>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Kategori</label>
+                      <select name="categories_id" class="form-control">
+                        @foreach ($categories as $categories)
+                          <option value="{{ $categories->id }}">{{ $categories->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Description</label>
+                      <textarea name="description" id="editor"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Thumbnails</label>
+                      <input type="file" name="photo" class="form-control" />
+                      <p class="text-muted">
+                        Kamu dapat memilih lebih dari satu file
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div class="row mt-4">
-
-                  @foreach ($products as $product)
-                      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <a
-                          href="{{ route('dashboard-product-details', $product->id) }}"
-                          class="card card-dashboard-product d-block"
-                        >
-                          <div class="card-body">
-                            <img
-                              src="{{ Storage::url($product->galleries->first()->photos ?? '') }}"
-                              alt=""
-                              class="w-100 mb-2"
-                            />
-                            <div class="product-title">{{ $product->name }}</div>
-                            <div class="product-category">{{ $product->category->name }}</div>
-                          </div>
-                        </a>
-                      </div>
-                  @endforeach
-
-                </div>
+                <div class="row">
+                  <div class="col text-right">
+                    <button
+                      type="submit"
+                      class="btn btn-success px-5"
+                    >
+                      Save Now
+                    </button>
+                  </div>
               </div>
             </div>
-          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
+
+@push('addon-script')
+  <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+  <script>
+    CKEDITOR.replace("editor");
+  </script>
+@endpush

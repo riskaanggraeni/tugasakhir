@@ -19,7 +19,18 @@ data-aos="fade-up"
   <div class="dashboard-content">
     <div class="row">
       <div class="col-12">
-        <form action="">
+        @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($error->all() as $error)
+                            <li>{{ $error}}</li>
+                        @endforeach
+                    </ul>
+                </div> 
+                @endif
+        <form action="{{ route('dashboard-product-update', $product->id) }}" method="POST">
+          @csrf
+          <input type="hidden" name="users_id" value="{{ Auth::users()->id}}">
           <div class="card">
             <div class="card-body">
               <div class="row">
@@ -51,23 +62,30 @@ data-aos="fade-up"
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea
-                      name="descrioption"
-                      id=""
-                      cols="30"
-                      rows="4"
-                      class="form-control"
-                    >{{ $products->description}}
+                    <label>Kategori</label>
+                    <select name="categories_id" class="form-control">
+                      <option value="{{ $product->categories_id}}">Tidak diganti ({{ $product->category->name}})</option>
+                      @foreach ($categories as $category)
+                      <option value="{{ $category->id}}">{{ $category->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" id="editor">{!! $product->description !!}</textarea>
                     </textarea>
                   </div>
                 </div>
-                <div class="col">
-                  <button
+              </div>
+                <div class="row">
+                  <div class="col text-right">
+                    <button
                     type="submit"
-                    class="btn btn-success btn-block px-5"
+                    class="btn btn-primary btn-block px-5"
                   >
-                    Update Product
+                    Save Now
                   </button>
                 </div>
               </div>
@@ -76,60 +94,45 @@ data-aos="fade-up"
         </form>
       </div>
     </div>
-    <div class="row mt-4">
+    <div class="row mt-2">
       <div class="col-12">
         <div class="card">
           <div class="card-body">
             <div class="row">
-              <div class="col-md-4">
-                <div class="gallery-container">
-                  <img
-                    src="images/product-card-1.png"
-                    alt=""
-                    class="w-100"
-                  />
-                  <a class="delete-gallery" href="#">
-                    <img src="images/icon-delete.svg" alt="" />
-                  </a>
+              @foreach ($product->galleries as $gallery)
+                <div class="col-md-4">
+                  <div class="gallery-container">
+                    <img
+                      src="{{ Storage::url($gallery->photos ?? '') }}"
+                      alt=""
+                      class="w-100"
+                    />
+                    <a href="{{ route('dashboard-product-gallery-delete', $gallery->id) }}" class="delete-gallery">
+                      <img src="/images/icon-delete.svg" alt="" />
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div class="gallery-container">
-                  <img
-                    src="images/product-card-2.png"
-                    alt=""
-                    class="w-100"
+              @endforeach
+              <div class="col-12">
+                <form action="{{ route('dashboard-product-gallery-upload') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  <input type="hidden" value="{{ $product->id }}" name="products_id">
+                  <input
+                    type="file"
+                    name="photos"
+                    id="file"
+                    style="display: none;"
+                    multiple
+                    onchange="form.submit()"
                   />
-                  <a class="delete-gallery" href="#">
-                    <img src="images/icon-delete.svg" alt="" />
-                  </a>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="gallery-container">
-                  <img
-                    src="images/product-card-3.png"
-                    alt=""
-                    class="w-100"
-                  />
-                  <a class="delete-gallery" href="#">
-                    <img src="images/icon-delete.svg" alt="" />
-                  </a>
-                </div>
-              </div>
-              <div class="col mt-3">
-                <input
-                  type="file"
-                  id="file"
-                  style="display: none;"
-                  multiple
-                />
-                <button
-                  class="btn btn-secondary btn-block"
-                  onclick="thisFileUpload();"
-                >
-                  Add Photo
-                </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-block mt-3"
+                    onclick="thisFileUpload()"
+                  >
+                    Add Photo
+                  </button>
+                </form>
               </div>
             </div>
           </div>
@@ -139,18 +142,17 @@ data-aos="fade-up"
   </div>
 </div>
 </div>
-    
 @endsection
 
 @push('addon-script')
-<script src="https://cdn.ckeditor.com/4/14/0/standard/ckeditor.js">
-    function thisFileUpload() {
-      document.getElementById("file").click();
-    }
-  </script>
-  <script>
-    CKEDITOR.replace("editor");
-  </script>
-    
+<script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+<script>
+  function thisFileUpload() {
+    document.getElementById("file").click();
+  }
+</script>
+<script>
+  CKEDITOR.replace("editor");
+</script>
 @endpush
 
