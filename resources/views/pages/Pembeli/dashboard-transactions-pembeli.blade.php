@@ -64,7 +64,7 @@ data-aos="fade-up"
                       alt=""
                     />
                   </div>
-                  <div class="col-md-4">
+                  {{-- <div class="col-md-4">
                     Shirup Marzzan
                   </div>
                   <div class="col-md-3">
@@ -72,7 +72,7 @@ data-aos="fade-up"
                   </div>
                   <div class="col-md-3">
                     12 Januari, 2020
-                  </div>
+                  </div> --}}
                   <div class="col-md-1 d-none d-md-block">
                     <img
                       src="images/dashboard-arrow-right.svg"
@@ -94,7 +94,7 @@ data-aos="fade-up"
                       alt=""
                     />
                   </div>
-                  <div class="col-md-4">
+                  {{-- <div class="col-md-4">
                     LeBrone X
                   </div>
                   <div class="col-md-3">
@@ -102,7 +102,7 @@ data-aos="fade-up"
                   </div>
                   <div class="col-md-3">
                     11 January, 2020
-                  </div>
+                  </div> --}}
                   <div class="col-md-1 d-none d-md-block">
                     <img
                       src="images/dashboard-arrow-right.svg"
@@ -124,15 +124,15 @@ data-aos="fade-up"
                       alt=""
                     />
                   </div>
-                  <div class="col-md-4">
+                  {{-- <div class="col-md-4">
                     Soffa Lembutte
-                  </div>
-                  <div class="col-md-3">
+                  </div> --}}
+                  {{-- <div class="col-md-3">
                     Shayna
                   </div>
                   <div class="col-md-3">
                     11 January, 2020
-                  </div>
+                  </div> --}}
                   <div class="col-md-1 d-none d-md-block">
                     <img
                       src="images/dashboard-arrow-right.svg"
@@ -165,7 +165,7 @@ data-aos="fade-up"
                       alt=""
                     />
                   </div>
-                  <div class="col-md-4">
+                  {{-- <div class="col-md-4">
                     lanyard
                   </div>
                   <div class="col-md-3">
@@ -173,7 +173,7 @@ data-aos="fade-up"
                   </div>
                   <div class="col-md-3">
                     12 Januari, 2020
-                  </div>
+                  </div> --}}
                   <div class="col-md-1 d-none d-md-block">
                     <img
                       src="images/dashboard-arrow-right.svg"

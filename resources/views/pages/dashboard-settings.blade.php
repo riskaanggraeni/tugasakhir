@@ -28,10 +28,17 @@ data-aos="fade-up"
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Nama Toko</label>
-                    <input type="text" class="form-control" name="store_name" value="{{ $user->store_name }}"/>
+                    <input type="text" class="form-control" name="store_name" value="{{ $user->name }}"/>
                   </div>
                 </div>
                 <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="phone_number">Mobile</label>
+                      <input type="text" class="form-control" id="phone_number" name="phone_number"
+                          value="+628 2020 11111" />
+                  </div>
+              </div>
+                {{-- <div class="col-md-6">
                   <div class="form-group">
                     <label>Kategori</label>
                     <select name="categories_id" class="form-control">
@@ -41,8 +48,8 @@ data-aos="fade-up"
                       @endforeach
                     </select>
                   </div>
-                </div>
-                <div class="col-md-6">
+                </div> --}}
+                {{-- <div class="col-md-6">
                   <div class="form-group">
                     <label>Store</label>
                     <p class="text-muted">
@@ -85,7 +92,7 @@ data-aos="fade-up"
                       </label>
                     </div>
                   </div>
-                </div>
+                </div> --}}
               </div>
               <div class="row">
                 <div class="col text-right">

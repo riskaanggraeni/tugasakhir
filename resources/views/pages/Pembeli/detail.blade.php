@@ -68,10 +68,10 @@
             <div class="container">
               <div class="row">
                 <div class="col-lg-8">
-                  <img src="{{Storage::url($product->galleries()->first()?->photos)}}" alt="">
+                  {{-- <img src="{{Storage::url($product->galleries()->first()?->photos)}}" alt=""> --}}
                   <h1>{{$product->name}}</h1>
                   <div class="owner">{{$product->user->name}}</div>
-                  <div class="price">Rp 155000</div>
+                  <div class="price">Rp{{ number_format($product->price) }}</div>
                 </div>
                 <div class="col-lg-2" data-aos="zoom-in">
                   @auth
@@ -109,7 +109,7 @@
             <div class="container">
               <div class="row">
                 <div class="col-12 col-lg-8 mt-3 mb-3">
-                  <h5>Customer Review (3)</h5>
+                  {{-- <h5>Customer Review (3)</h5> --}}
                 </div>
               </div>
               <div class="row">
@@ -121,10 +121,10 @@
                         class="mr-3 rounded-circle"
                         alt=""
                       />
-                      <div class="media-body">
+                      {{-- <div class="media-body">
                         <h5 class="mt-2 mb-1">Hazza Risky</h5>
                         Bagus
-                      </div>
+                      </div> --}}
                     </li>
                     <li class="media my-4">
                       <img
@@ -132,9 +132,9 @@
                         class="mr-3 rounded-circle"
                         alt=""
                       />
-                      <div class="media-body">
+                      {{-- <div class="media-body">
                         <h5 class="mt-2 mb-1">Anna</h5>
-                        Kain nya lembut
+                        Kain nya lembut --}}
                       </div>
                     </li>
                     <li class="media">

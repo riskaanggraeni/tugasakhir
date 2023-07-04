@@ -22,10 +22,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::get('register/check', 'Auth\RegisterController@check')->name('api-register-check');
+Route::get('register/check', 'App\Http\Controllers\Auth\RegisterController@check')->name('api-register-check');
 Route::get('provinces', [App\Http\Controllers\API\LocationController::class, 'provinces'])->name('api-provinces');
 Route::get('regencies/{provincies_id}', [App\Http\Controllers\API\LocationController::class, 'regencies'])->name('api-regencies');
-// Route::get('register/check', '[App\Http\Controllers\Auth\RegisterControlle::class,'check)->name('api-register-check');
+Route::post('/midtrans-notification', [App\Http\Controllers\CheckoutController::class, 'callback']);
+// Route::get('register/check', '[App\Http\Controllers\Auth\RegisterController::class,'check)->name('api-register-check');
 
 Route::prefix('kurir')->name('kurir.')->group(function () {
     Route::get('/provinces', [App\Http\Controllers\API\RajaOngkirController::class, 'provinces'])->name('provinces');

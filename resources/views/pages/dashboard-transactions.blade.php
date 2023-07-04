@@ -39,15 +39,22 @@
                                                     <img src="{{ Storage::url($transaction->product->galleries->first()->photos ?? '') }}"
                                                         class="w-50" />
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     {{ $transaction->product->name }}
                                                 </div>
-                                                <div class="col-md-3">
-                                                    {{ $transaction->product->user->store_name }}
+                                                <div class="col-md-2">
+                                                    {{ $transaction->transaction->code }}
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
+                                                    {{ $transaction->shipping_status }}
+                                                </div>
+                                                <div class="col-md-2">
                                                     {{ $transaction->created_at }}
                                                 </div>
+                                                <div class="col-md-3">
+                                                    {{ $transaction->transaction->status }}
+                                                </div>
+                                               
                                                 <div class="col-md-1 d-none d-md-block">
                                                     <img src="/images/dashboard-arrow-right.svg" alt="" />
                                                 </div>
@@ -59,25 +66,39 @@
                             <div class="tab-pane fade" id="pills-profile" role="tabpanel"
                                 aria-labelledby="pills-profile-tab">
                                 @foreach ($buyTransactions as $transaction)
-                                    <a {{-- href="{{ route('dashboard-transaction-details-penjual', $transaction->id) }}" --}} class="card card-list d-block">
+                                <a href="{{ route('dashboard-transaction-details', $transaction->id) }}"
+                                    class="card card-list d-block">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-1">
                                                     <img src="{{ Storage::url($transaction->product->galleries->first()->photos ?? '') }}"
                                                         class="w-50" />
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     {{ $transaction->product->name }}
                                                 </div>
-                                                <div class="col-md-3">
-                                                    {{ $transaction->product->user->store_name }}
+                                                <div class="col-md-2">
+                                                    {{ $transaction->product->user->name }}
                                                 </div>
                                                 <div class="col-md-3">
                                                     {{ $transaction->created_at }}
                                                 </div>
-                                                <div class="col-md-1 d-none d-md-block">
-                                                    <img src="/images/dashboard-arrow-right.svg" alt="" />
-                                                </div>
+                                                    {{-- <input type="text" hidden> --}}
+                                                    <div class="col-md-3">
+                                                        @if ( $transaction->transaction->status == "diterima")
+                                                            {{ $transaction->transaction->status }}
+                                                        @else
+                                                        <form action="{{route('dashboard-transaction-confirm', $transaction->transaction->id)}}", method="POST">
+                                                            @csrf
+                                                                <button type="submit" class="btn btn-primary px-3">
+                                                                    Pesanan di terima</button>
+                                                        </form>
+                                                        @endif
+                                                        
+                                                    </div>
+                                                    <div class="col-md-1 d-none d-md-block">
+                                                        <img src="/images/dashboard-arrow-right.svg" alt="" />
+                                                    </div>
                                             </div>
                                         </div>
                                     </a>

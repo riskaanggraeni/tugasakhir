@@ -13,7 +13,10 @@ class Transaction extends Model
         'shipping_price',
         'total_price',
         'transactions_status',
-        'code'
+        'code',
+        'dana',
+        'total_ongkir',
+        'status'
     ];
 
     protected $hidden = [
@@ -23,5 +26,8 @@ class Transaction extends Model
     public function user()
     {
         return $this->BelongsTo(User::class, 'users_id', 'id');
+    }
+    public function product() {
+        return $this->hasOne(Product::class, 'id', 'products_id');
     }
 }

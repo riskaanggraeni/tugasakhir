@@ -45,18 +45,18 @@
                                                     {{ $transaction->created_at }}
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6">
+                                            {{-- <div class="col-12 col-md-6">
                                                 <div class="product-title">Payment Status</div>
                                                 <div class="product-subtitle text-danger">
                                                     {{ $transaction->transaction->transaction_status }}
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-12 col-md-6">
                                                 <div class="product-title">
-                                                    Total Amount
+                                                    Harga Produk
                                                 </div>
                                                 <div class="product-subtitle">
-                                                    ${{ number_format($transaction->transaction->total_price) }}
+                                                    Rp{{ number_format($transaction->price) }}
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6">
@@ -65,6 +65,22 @@
                                                 </div>
                                                 <div class="product-subtitle">
                                                     {{ $transaction->transaction->user->phone_number }}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="product-title">
+                                                    Harga Ongkir
+                                                </div>
+                                                <div class="product-subtitle">
+                                                    Rp{{ number_format($transaction->transaction->total_ongkir) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="product-title">
+                                                    Total Amount
+                                                </div>
+                                                <div class="product-subtitle">
+                                                    Rp{{ number_format($transaction->transaction->total_price) }}
                                                 </div>
                                             </div>
                                         </div>
@@ -94,13 +110,13 @@
                                                 <div class="col-12 col-md-6">
                                                     <div class="product-title">Province</div>
                                                     <div class="product-subtitle">
-                                                        {{ App\Models\Province::find($transaction->transaction->user->provinces_id)->name }}
+                                                        Jawa Timur
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <div class="product-title">City</div>
                                                     <div class="product-subtitle">
-                                                        {{ App\Models\Regency::find($transaction->transaction->user->regencies_id)->name }}
+                                                        Sidoarjo
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-6">
@@ -113,7 +129,15 @@
                                                     <div class="product-subtitle">
                                                         {{ $transaction->transaction->user->country }}</div>
                                                 </div>
-                                                <div class="col-12 col-md-3">
+                                                <div class="col-12 col-md-6">
+                                                    <div class="product-title">Kurir</div>
+                                                    <div class="product-subtitle">{{ strtoupper($transaction->kurir) }}</div>
+                                                </div>
+                                                <div class="col-12 col-md-6">
+                                                    <div class="product-title">Service</div>
+                                                    <div class="product-subtitle">{{ $transaction->kurir_id }}</div>
+                                                </div>
+                                                {{-- <div class="col-12 col-md-3">
                                                     <div class="product-title">Shipping Status</div>
                                                     <select name="shipping_status" id="status" class="form-control"
                                                         v-model="status">
@@ -121,29 +145,29 @@
                                                         <option value="SHIPPING">Shipping</option>
                                                         <option value="SUCCESS">Success</option>
                                                     </select>
-                                                </div>
-                                                <template v-if="status == 'SHIPPING'">
+                                                </div> --}}
+                                                {{-- <template v-if="status == 'SHIPPING'">
                                                     <div class="col-md-3">
                                                         <div class="product-title">Input Resi</div>
                                                         <input type="text" class="form-control" name="resi"
                                                             v-model="resi" />
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <button type="submit" class="btn btn-success btn-block mt-4">
+                                                        <button type="submit" class="btn btn-primary btn-block mt-4">
                                                             Update Resi
                                                         </button>
                                                     </div>
-                                                </template>
+                                                </template> --}}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row mt-4">
+                                    {{-- <div class="row mt-4">
                                         <div class="col-12 text-right">
                                             <button type="submit" class="btn btn-primary btn-lg mt-4">
                                                 Save Now
                                             </button>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </form>
                             </div>
                         </div>

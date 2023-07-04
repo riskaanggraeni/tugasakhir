@@ -38,7 +38,7 @@ class DashboardProductController extends Controller
         // return view('pages.dashboard-products-create', [
         //     'categories' => $categories
         // ]);
-        dd("masuk");
+        // dd("masuk");
         return view('pages.dashboard-products-create');
     }
 

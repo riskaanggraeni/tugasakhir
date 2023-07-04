@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('roles')->default('PEMBELI'); 
-                
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->string('status')->default('pending');
         });
     }
 
@@ -26,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('roles');
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->dropColumn('status');
         });
     }
 };

@@ -80,13 +80,26 @@
                     <div class="col-12">
                         <hr />
                     </div>
+                    {{-- <div class="col-12">
+                        <h2 class="mb-4">Metode Pengiriman</h2>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="metode_pengiriman">Metode Pengiriman</label>
+                                <select name="metodepengiriman" id="metode_pengiriman" class="form-control"
+                                    v-model="pilihPengiriman">
+                                    <option value="AMBILDIKAMPUS">AMBIL DI KAMPUS</option>
+                                    <option value="KURIR">Kurir</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div> --}}
                     <div class="col-12">
                         <h2 class="mb-4">Shipping Details</h2>
                     </div>
                 </div>
                 <form action="{{ route('checkout') }}" method="POST" enctype="multipart/form-data" id="vueContent">
                     @csrf
-                    <input type="hidden" name="total_price" value="{{ $totalPrice }}">
+                    <input type="hidden" name="total_price" id="total_price">
                     <div class="row mb-2" data-aos="fade-up" data-aos-delay="200">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -166,8 +179,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="kurir_id">Kurir</label>
-                                    <select name="kurir" id="kurir_id" class="form-control"
+                                    <label for="kurir">Kurir</label>
+                                    <select name="kurir" class="form-control"
                                         v-model="selectedCourier">
                                         {{-- @change="getServiceInfo"> --}}
                                         <option value="jne">JNE</option>
@@ -197,6 +210,7 @@
                                 <div class="product-title text-success">Rp
                                     @{{ total_ongkir }}
                                 </div>
+                                <input type="text" class="d-none" name="total_ongkir" id="total_ongkir">
                                 <div class="product-subtitle">Total Ongkir</div>
                             </div>
                             <div class="col-4 col-md-2">
@@ -273,11 +287,12 @@
                     self.payments = self.services.filter(service => service.service == self.keyService).map(
                         service => service.cost);
                     self.total_ongkir = self.payments[0][0].value;
+                    document.getElementById("total_ongkir").value = self.total_ongkir;
                     self.total_ongkir = self.total_ongkir.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     self.total_harga = self.payments[0][0].value + {{ $totalPrice ?? 0 }};
+                    document.getElementById("total_price").value = self.total_harga;
                     self.total_harga = self.total_harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     //change format to rupiah number
-
                     console.log(self.payments);
                 },
                 getServiceInfo() {

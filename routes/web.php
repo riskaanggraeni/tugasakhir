@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pembeli\DashboardPembeliController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\DashboardTransactionController;
 use App\Models\Role;
 
 /*
@@ -87,12 +88,16 @@ Route::prefix('dashboard')->group(function () {
 
         Route::prefix('galleries')->group(function () {
             Route::post('/upload', [App\Http\Controllers\DashboardProductController::class, 'uploadGallery'])->name('dashboard-product-gallery-upload');
-            Route::post('/{id}', [App\Http\Controllers\DashboardProductController::class, 'deletGallery'])->name('dashboard-product-gallery-delete');
+            Route::post('/{id}', [App\Http\Controllers\DashboardProductController::class, 'deleteGallery'])->name('dashboard-product-gallery-delete');
         });
     });
+    
+    // Route::patch('/orders/{orderId}/mark-as-received', [OrderController::class, 'markAsReceived'])->name('orders.markAsReceived');
+
 
 
     Route::get('/transactions', [App\Http\Controllers\DashboardTransactionController::class, 'index'])->name('dashboard-transaction');
+    Route::post('/transactions/confirm/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'confirm'])->name('dashboard-transaction-confirm');
     Route::get('/transactions/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'details'])->name('dashboard-transaction-details');
     Route::get('/transactions/{id}/update', [App\Http\Controllers\DashboardTransactionController::class, 'update'])->name('dashboard-transaction-update');
 
@@ -108,7 +113,7 @@ Route::prefix('dashboard')->group(function () {
 // ->middleware(['auth', 'admin']);
 Route::prefix('admin')
     ->namespace('App\Http\Controllers\Admin')
-    ->middleware('auth', 'admin')
+    // ->middleware('auth', 'admin')
     ->group(function () {
         Route::get('/', [App\Http\Controllers\Admin\HomeAdminController::class, 'index'])->name('admin-home');
         Route::resource('category', CategoryController::class);
@@ -116,6 +121,7 @@ Route::prefix('admin')
         Route::resource('user', UserController::class);
         Route::resource('product', ProductController::class);
         Route::resource('product-gallery', ProductGalleryController::class);
+        Route::resource('transaction', TransactionController::class);
     });
 
 

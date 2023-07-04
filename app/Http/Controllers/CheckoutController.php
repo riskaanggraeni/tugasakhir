@@ -12,6 +12,7 @@ use Exception;
 
 use Midtrans\Snap;
 use Midtrans\Config;
+use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
@@ -22,11 +23,13 @@ class CheckoutController extends Controller
         $user->update($request->except('total_price'));
 
         //proses checkout
-        $code = 'STORE-' . mt_rand(000000,999999);
+        $code = 'TRX' . mt_rand(000000,999999);
+        // $code = 'STORE-' . mt_rand(000000,999999);
         $cart = Cart::with(['product', 'user'])
         ->where('users_id', Auth::user()->id)
         ->get();
 
+        // dd($request->total_ongkir);
         //Transaction create
         $transaction = Transaction::create([
             'users_id' => Auth::user()->id,
@@ -34,7 +37,8 @@ class CheckoutController extends Controller
             'shipping_price' => 0,
             'total_price' => $request->total_price,
             'transactions_status' => 'PENDING',
-            'code' => $code
+            'code' => $code,
+            'total_ongkir' => $request->total_ongkir,
         ]);
 
         foreach($cart as $cart) {
@@ -46,7 +50,10 @@ class CheckoutController extends Controller
                 'price' => $cart->product->price,
                 'shipping_status' => 'PENDING',
                 'resi' => '',
-                'code' => $trx
+                'code' => $trx,
+                'kurir' => $request->kurir,
+                'kurir_id' => $request->services,
+                // 'kurir_id' => '0',
 
             ]);
 
@@ -98,6 +105,40 @@ class CheckoutController extends Controller
 
     public function callback(Request $request)
     {
+        $transactionStatus = $request->input('transaction_status');
+        $orderId = $request->input('order_id');
 
+        // Proses sesuai dengan status transaksi
+        if ($transactionStatus === 'settlement') {
+            // Transaksi berhasil
+            // Lakukan aksi yang sesuai, misalnya update status pesanan menjadi sukses
+            Transaction::where('code', $orderId)->update([
+                'transactions_status' => 'LUNAS',
+            ]);
+           $update =  DB::table('transactions')
+            ->leftJoin('transaction_details', 'transactions.id', '=', 'transaction_details.transactions_id')
+            ->where('transactions.code', $orderId)
+            ->update(['transaction_details.shipping_status' => 'LUNAS']);
+            // dd($update);
+            // TransactionDetail::where('code', $orderId)->update([
+            //     'shipping_status' => 'SAMPAI',
+            // ]);
+        } else if ($transactionStatus === 'cancel') {
+            // Transaksi dibatalkan
+            // Lakukan aksi yang sesuai, misalnya update status pesanan menjadi dibatalkan
+            Transaction::where('code', $orderId)->update([
+                'transactions_status' => 'Cancel',
+            ]);
+            
+        } else if ($transactionStatus === 'deny') {
+            // Transaksi ditolak
+            // Lakukan aksi yang sesuai, misalnya update status pesanan menjadi ditolak
+            Transaction::where('code', $orderId)->update([
+                'transactions_status' => 'Ditolak',
+            ]);
+        }
+
+        // Berikan respon kepada Midtrans agar callback berhasil
+        return response()->json(['status' => 'success']);
     }
 }

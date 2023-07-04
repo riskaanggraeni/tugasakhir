@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('roles')->default('PEMBELI'); 
-                
+        Schema::table('transaction_details', function (Blueprint $table) {
+            $table->string('kurir_id'); 
         });
     }
 
@@ -26,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('roles');
+        Schema::table('transaction_details', function (Blueprint $table) {
+            $table->dropColumn('kurir_id');
         });
     }
 };
